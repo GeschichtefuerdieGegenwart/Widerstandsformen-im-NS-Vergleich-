@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widerstandsformen im NS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #2c3e50;
+            --color-accent: #e67e22;
+            --color-bg: #f8f9fa;
+            --color-text: #2c3e50;
+            --color-border: #ddd;
+            --color-success: #27ae60;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 16px;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* FILTER NAVIGATION */
+        .filter-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--color-primary);
+            background: white;
+            color: var(--color-primary);
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* CARDS GRID */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .card.active {
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+            color: white;
+            padding: 20px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--color-primary);
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 8px;
+        }
+
+        .card-body p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .card-body strong {
+            color: var(--color-primary);
+        }
+
+        .form-type {
+            background: #f0f0f0;
+            padding: 12px;
+            border-left: 4px solid var(--color-accent);
+            margin: 15px 0;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--color-accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 5px 5px 5px 0;
+        }
+
+        .badge.form {
+            background: #27ae60;
+        }
+
+        .badge.region {
+            background: #3498db;
+        }
+
+        .sources {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            border-left: 4px solid var(--color-success);
+            font-size: 12px;
+            color: #666;
+        }
+
+        .sources h4 {
+            font-size: 13px;
+            color: var(--color-primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .sources p {
+            margin: 6px 0;
+            line-height: 1.5;
+        }
+
+        .sources a {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+
+        .sources a:hover {
+            text-decoration: underline;
+        }
+
+        /* LEGEND */
+        .legend {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .legend h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .legend-badge {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+            margin-top: 2px;
+        }
+
+        .legend-badge.form {
+            background: #27ae60;
+        }
+
+        .legend-badge.region {
+            background: #3498db;
+        }
+
+        .legend-text h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 4px;
+        }
+
+        .legend-text p {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 24px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-nav {
+                justify-content: flex-start;
+            }
+
+            .card-body {
+                font-size: 13px;
+            }
+        }
+
+        /* ACCESSIBILITY */
+        :focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <h1>🏛️ Widerstandsformen im NS</h1>
+            <p>Entdecke verschiedene Arten des Widerstands gegen das NS-Regime – von Einzelpersonen bis zu organisierten Gruppen</p>
+        </header>
+
+        <!-- LEGENDE -->
+        <div class="legend">
+            <h2>📊 Wie diese Seite aufgebaut ist</h2>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <span class="legend-badge form">Widerstandsform</span>
+                    <div class="legend-text">
+                        <h4>Widerstandsform</h4>
+                        <p>Art des Widerstands (militärisch, zivil, kulturell, etc.)</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge region">Region</span>
+                    <div class="legend-text">
+                        <h4>Geografischer Raum</h4>
+                        <p>Wo fand der Widerstand statt?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTER BUTTONS -->
+        <div class="filter-nav">
+            <button class="filter-btn active" onclick="filterCards('all')">Alle anzeigen</button>
+            <button class="filter-btn" onclick="filterCards('jugend')">Jugendwiderstand</button>
+            <button class="filter-btn" onclick="filterCards('intellektuell')">Intellektueller Widerstand</button>
+            <button class="filter-btn" onclick="filterCards('militaer')">Militärischer Widerstand</button>
+            <button class="filter-btn" onclick="filterCards('juedisch')">Jüdischer Widerstand</button>
+            <button class="filter-btn" onclick="filterCards('einzeln')">Einzelpersonen</button>
+        </div>
+
+        <!-- CARDS -->
+        <div class="cards-grid">
+
+            <!-- 1. SWING-JUGEND -->
+            <div class="card" data-category="jugend">
+                <div class="card-header">
+                    <div class="card-title">🎷 Swing-Jugend</div>
+                    <div class="card-subtitle">1940–1943 | Kulturelle Selbstbehauptung</div>
+                </div>
+                <div class="card-body">
+                    <h3>Was war die Swing-Jugend?</h3>
+                    <p>Großstädtische Jugendliche (besonders Hamburg, Berlin) lehnten die Hitlerjugend ab und trafen sich in geheimen Clubs, um zu Jazz und Swing zu tanzen – beides waren im NS verboten und galten als "entarte Musik".</p>
+                    
+                    <div class="form-type">
+                        <strong>Widerstandsform:</strong> Kultureller Widerstand durch Verweigerung von Anpassung
+                    </div>
+
+                    <h3>Ihre Aktionen</h3>
+                    <p>• Illegale Clubs und Tanztreffs<br>
+                    • Tragen von Swing-Mode (lange Haare, englische Kleidung)<br>
+                    • Sammlung und Verbreitung von Jazz-Schallplatten<br>
+                    • Bewusste Nicht-Teilnahme an HJ-Veranstaltungen</p>
+
+                    <h3>Konsequenzen</h3>
+                    <p>Anfangs nur Verwarnungen; ab 1942 Verhaftungen und Einweisung in Jugend-KZ oder Straflager (z.B. Moringen, Lübeck).</p>
+
+                    <h3>Besonderheiten</h3>
+                    <p><strong>⚠️ Wichtig:</strong> Die Swing-Jugend war <strong>nicht politisch motiviert</strong> – sie wollten tanzen und cool sein. Dennoch war ihr bloßes Existieren ein "Widerstand", weil das NS-Regime eine totale kulturelle Kontrolle forderte.</p>
+
+                    <span class="badge form">Kultureller Widerstand</span>
+                    <span class="badge region">Großstädte (Hamburg, Berlin)</span>
+
+                    <div class="sources">
+                        <h4>📚 Quellen</h4>
+                        <p><strong>Detlev Peukert:</strong> <em>Die Edelweißpiraten. Protest und Widerstand im Nationalsozialismus</em> (1980)</p>
+                        <p><strong>bpb (Bundeszentrale):</strong> "Widerstand im Nationalsozialismus" – Swing-Jugend Artikel</p>
+                        <p><strong>Deutsches Historisches Museum (DHM):</strong> LeMO Kapitel "Widerstand" mit Primärquellen</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. WEISSE ROSE -->
+            <div class="card" data-category="intellektuell">
+                <div class="card-header">
+                    <div class="card-title">🌹 Weiße Rose</div>
+                    <div class="card-subtitle">1942–1943 | Studentischer Widerstand</div>
+                </div>
+                <div class="card-body">
+                    <h3>Was war die Weiße Rose?</h3>
+                    <p>Eine kleine studentische Widerstandsgruppe an der Universität München unter der Leitung von Hans und Sophie Scholl, Willi Graf und anderen. Sie verteilten Flugblätter, die das NS-Regime scharf kritisierten.</p>
+
+                    <div class="form-type">
+                        <strong>Widerstandsform:</strong> Intellektueller Widerstand durch Propaganda
+                    </div>
+
+                    <h3>Ihre Aktionen</h3>
+                    <p>• Verfassung und Verteilung von 6 Flugblättern (250.000+ Kopien)<br>
+                    • Appell zu "Passivem Widerstand" gegen das Regime<br>
+                    • Kritik an Euthanasie und Kriegspolitik<br>
+                    • Große Wandmalerei "Nieder mit Hitler" an der Uni München</p>
+
+                    <h3>Zentrale Botschaft</h3>
+                    <p><em>"Nichts ist des Menschen würdiger als Freiheit und Ehre. Ergreift daher Eure Chance, ehe es zu spät ist."</em> (aus den Flugblättern)</p>
+
+                    <h3>Konsequenzen</h3>
+                    <p>Fast alle Mitglieder wurden verhaftet. Hans Scholl, Sophie Scholl und Christoph Probst wurden am <strong>22. Februar 1943 hingerichtet</strong>. Willi Graf und Alexander Schmorell folgte wenig später.</p>
+
+                    <span class="badge form">Intellektueller Widerstand</span>
+                    <span class="badge region">München</span>
+
+                    <div class="sources">
+                        <h4>📚 Quellen</h4>
+                        <p><strong>Inge Scholl:</strong> <em>Die Weiße Rose</em> (Klassische Autobiografie, 1952)</p>
+                        <p><strong>Stiftung Weiße Rose:</strong> www.weisse-rose.de – Vollständige Flugblätter und Dokumente</p>
+                        <p><strong>bpb:</strong> Umfassender Artikel zur Weißen Rose mit Primärquellen</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. CLAUS VON STAUFFENBERG -->
+            <div class="card" data-category="militaer">
+                <div class="card-header">
+                    <div class="card-title">⚔️ Claus von Stauffenberg</div>
+                    <div class="card-subtitle">20. Juli 1944 | Das Attentat auf Hitler</div>
+                </div>
+                <div class="card-body">
+                    <h3>Wer war Stauffenberg?</h3>
+                    <p>Ein hochrangiger Wehrmacht-Offizier (Oberst), der nicht nur Hitler entfernen, sondern das gesamte NS-System stürzen wollte. Mit seiner Behinderung (eine Hand, ein Auge) hatte er leichten Zugang zu Hitler.</p>
+
+                    <div class="form-type">
+                        <strong>Widerstandsform:</strong> Militärischer Widerstand (Attentat + Umsturzplan)
+                    </div>
+
+                    <h3>Der 20. Juli 1944</h3>
+                    <p>• Stauffenberg schmuggelte zwei Sprengstoffpakete (je 500g) in die "Wolfsschanze" (Hitlers Hauptquartier)<br>
+                    • Detonation in Hitlers Lagebesprechung<br>
+                    • Über 20 Menschen wurden getötet – aber <strong>Hitler überlebte</strong><br>
+                    • Der Umsturzplan ("Unternehmen Walküre") wurde ein Fiasko</p>
+
+                    <h3>Seine Vision</h3>
+                    <p>Stauffenberg wollte nicht nur Hitler töten, sondern ein neues demokratisches Deutschland aufbauen. Er arbeitete mit Sozialdemokraten, Kommunisten und Konservativen zusammen – eine seltene Einheit im Widerstand.</p>
+
+                    <h3>Konsequenzen</h3>
+                    <p>Stauffenberg und drei seiner Mitverschwörer wurden noch in derselben Nacht (20./21. Juli) erschossen. Hunderte weitere Widerständler wurden in den folgenden Wochen hingerichtet.</p>
+
+                    <span class="badge form">Militärischer Widerstand</span>
+                    <span class="badge region">Berlin (Wolfsschanze)</span>
+
+                    <div class="sources">
+                        <h4>📚 Quellen</h4>
+                        <p><strong>Peter Hoffmann:</strong> <em>Stauffenberg</em> – Die Standardbiografie (Yale University Press)</p>
+                        <p><strong>Gedenkstätte Deutscher Widerstand (Berlin):</strong> Ausführliche Dokumentation des 20. Juli</p>
+                        <p><strong>Bundeswehr Zentrum für Militärgeschichte:</strong> "Der militärische Widerstand" (zms.bundeswehr.de)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. GEORG ELSER -->
+            <div class="card" data-category="einzeln">
+                <div class="card-header">
+                    <div class="card-title">💣 Georg Elser</div>
+                    <div class="card-subtitle">8. November 1939 | Attentat im Bürgerbräu</div>
+                </div>
+                <div class="card-body">
+                    <h3>Wer war Georg Elser?</h3>
+                    <p>Ein einfacher Schreiner und Handwerker aus dem Schwarzwald, mit kaum formaler Bildung. Er war einer der wenigen, die <strong>unabhängig und allein</strong> ein Attentat auf Hitler planten und fast erfolgreich waren.</p>
+
+                    <div class="form-type">
+                        <strong>Widerstandsform:</strong> Einzelner, unabhängiger Attentäter
+                    </div>
+
+                    <h3>Das Attentat (8. November 1939)</h3>
+                    <p>• Elser baute über Wochen eine Zeitbombe in einen Pfeiler des Bürgerbräukellers in München ein<br>
+                    • Der Pfeiler war direkt hinter Hitlers Rednerpult<br>
+                    • Die Bombe explodierte wie geplant – aber Hitler hatte die Veranstaltung früher verlassen und die Rede gekürzt<br>
+                    • <strong>8 Menschen starben, aber nicht Hitler</strong></p>
+
+                    <h3>Besonderheiten</h3>
+                    <p><strong>Einzig in seiner Art:</strong> Elser war kein Teil einer Verschwörung, kein Offizier, kein Intellektueller. Er handelte aus privatem Gewissen heraus – fast unglaublich mutig für einen Schreiner.</p>
+
+                    <p><strong>Zu Unrecht vergessen:</strong> Elser wurde lange Zeit vergessen, weil die NS-Propaganda sein Attentat als "englische Propaganda" darstellte. Erst nach 1945 wurde seine wahre Geschichte bekannt.</p>
+
+                    <h3>Konsequenzen</h3>
+                    <p>Elser wurde verhaftet, sofort verdächtigt (Gestapo dachte zuerst, Englland stecke dahinter) und überlebte das KZ nur knapp. Er wurde 1945 in Dachau ermordet.</p>
+
+                    <span class="badge form">Einzelwiderstand (Attentat)</span>
+                    <span class="badge region">München (Bürgerbräu)</span>
+
+                    <div class="sources">
+                        <h4>📚 Quellen</h4>
+                        <p><strong>Käthe Reiss:</strong> <em>Georg Elser – Mein Sohn, der Attentäter</em> (2013)</p>
+                        <p><strong>Georg Elser Gedenkstätte (Königsbronn):</strong> www.georg-elser-gedenkstaette.de</p>
+                        <p><strong>DHM (LeMO):</strong> Artikel über "Das Attentat auf Hitler 1939"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. ANNE FRANK -->
+            <div class="card" data-category="juedisch">
+                <div class="card-header">
+                    <div class="card-title">📔 Anne Frank</div>
+                    <div class="card-subtitle">1942–1944 | Versteckt in Amsterdam</div>
+                </div>
+                <div class="card-body">
+                    <h3>Wer war Anne Frank?</h3>
+                    <p>Ein jüdisches Mädchen, das mit seiner Familie vor der Nazi-Verfolgung in Amsterdam versteckt lebte. Ihr Tagebuch wurde zum welthistorisch bedeutendsten Zeugnis des Holocaust.</p>
+
+                    <div class="form-type">
+                        <strong>Widerstandsform:</strong> Überlebenswiderstand + kulturelle Zeugenschaft
+                    </div>
+
+                    <h3>Die Situation</h3>
+                    <p>• Nach Deutschen Invasion Hollands (1940) wurden Juden zunehmend verfolgt<br>
+                    • Annes Familie versteckte sich ab Juli 1942 im "Hinterhaus" eines Bürogebäudes in Amsterdam<br>
+                    • Sie teilte diesen Raum mit 7 anderen Menschen für über 2 Jahre<br>
+                    • Sie schrieb täglich in ihr Tagebuch, um "Normalität" zu bewahren</p>
+
+                    <h3>Ihr Widerstand</h3>
+                    <p><strong>Das Tagebuch ist selbst der Widerstand.</strong> Anne schrieb über:<br>
+                    • Ihre Träume und Hoffnungen (Liebe, Pläne, Träume)<br>
+                    • Die Absurdität der Verfolgung<br>
+                    • Die Menschlichkeit unter Extrembedingungen<br>
+                    • Ihre Kritik an der NS-Ideologie</p>
+
+                    <p><strong>Bloßes Überleben war Widerstand:</strong> Für Juden im NS war jeder Tag Verstecken ein Akt des Widerstands gegen die Vernichtung.</p>
+
+                    <h3>Konsequenzen</h3>
+                    <p>Die Familie wurde verraten und 1944 nach Auschwitz deportiert. Anne und ihre Schwester starben im KZ Bergen-Belsen kurz vor der Befreiung. Nur ihr Vater überlebte – und veröffentlichte Annes Tagebuch.</p>
+
+                    <span class="badge form">Überlebenswiderstand</span>
+                    <span class="badge region">Amsterdam (Niederlande)</span>
+
+                    <div class="sources">
+                        <h4>📚 Quellen</h4>
+                        <p><strong>Anne Frank:</strong> <em>Das Tagebuch der Anne Frank</em> (Original 1947)</p>
+                        <p><strong>Anne Frank Stiftung:</strong> www.annefrank.org – Vollständiges Tagebuch online + Biografie</p>
+                        <p><strong>Yad Vashem:</strong> Umfangreiche Dokumentation über versteckte Juden und ihre Rettung</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. JÜDISCHER WIDERSTAND ALLGEMEIN -->
+            <div class="card" data-category="juedisch">
+                <div class="card-header">
+                    <div class="card-title">✊ Jüdischer Widerstand</div>
+                    <div class="card-subtitle">1942–1945 | Unter extremsten Bedingungen</div>
+                </div>
+                <div class="card-body">
+                    <h3>Was war jüdischer Widerstand?</h3>
+                    <p>Unter Bedingungen totaler Verfolgung leisteten Juden Widerstand in verschiedenen Formen – obwohl sie der systematischen Vernichtung ausgesetzt waren.</p>
+
+                    <div class="form-type">
+                        <strong>Widerstandsform:</strong> Physischer, spiritueller und kultureller Widerstand
+                    </div>
+
+                    <h3>Formen des Widerstands</h3>
+                    
+                    <p><strong>🔫 Physischer Widerstand:</strong></p>
+                    <p>• Ghetto-Aufstände (z.B. Warschauer Ghetto-Aufstand 1943)<br>
+                    • Partisanenkampf in Wäldern (Sowjetunion)<br>
+                    • Lageraufstände (z.B. Treblinka, Sobibor)</p>
+
+                    <p><strong>📖 Spiritueller/Kultureller Widerstand:</strong></p>
+                    <p>• Heimlicher Religionsunterricht für Kinder<br>
+                    • Archivierung von Dokumenten (Oyneg Shabbos in Warschau)<br>
+                    • Kunstwerke und Lieder im Ghetto<br>
+                    • Theater und Musik trotz Verbots</p>
+
+                    <p><strong>🏃 Überlebenswiderstand:</strong></p>
+                    <p>• Verstecken und Flucht<br>
+                    • Falsche Identitäten<br>
+                    • Untergrundnetze (Rettung durch Christen)</p>
+
+                    <h3>Die zentrale These</h3>
+                    <p><strong>"Bloßes Überleben war Widerstand"</strong> – weil die Alternative die garantierte Vernichtung war. Jüdische Widerständler zeigten maximale Agency unter minimalem Handlungsspielraum.</p>
+
+                    <span class="badge form">Multiforme Widerstände</span>
+                    <span class="badge region">Ganz Europa (Ghettos, Lager, Wälder)</span>
+
+                    <div class="sources">
+                        <h4>📚 Quellen</h4>
+                        <p><strong>Yad Vashem (World Holocaust Remembrance Center):</strong> Umfassende Datenbank zu jüdischem Widerstand</p>
+                        <p><strong>Samuel Kassow:</strong> <em>Who Will Write Our History?</em> – Über das Oyneg Shabbos Archiv</p>
+                        <p><strong>Reuben Ainsztein:</strong> <em>Jewish Resistance in Nazi-Occupied Eastern Europe</em> (1974)</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-top: 40px;">
+            <h3 style="color: var(--color-primary); margin-bottom: 15px;">🔍 Weitere Recherche</h3>
+            <p style="color: #666; margin-bottom: 12px;">Die hier präsentierten Informationen sind Einführungen. Für vertiefte Recherche empfohlen:</p>
+            <ul style="color: #666; margin-left: 20px;">
+                <li><strong>Studienkreis Deutscher Widerstand:</strong> widerstand-1933-1945.de – Pädagogische Angebote für Schüler</li>
+                <li><strong>SEGU (Selbstgesteuerte Geschichte):</strong> segu-geschichte.de/widerstand – Interaktive Module</li>
+                <li><strong>Gedenkstätte Deutscher Widerstand (Berlin):</strong> gdw-berlin.de – Primärquellen und Ausstellung</li>
+                <li><strong>Bundeszentrale für politische Bildung (bpb):</strong> bpb.de – Artikel und Lehrmaterialien</li>
+                <li><strong>Deutsches Historisches Museum (DHM):</strong> LeMO (Lebendiges Museum Online) – Zeitstrahl "Widerstand"</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function filterCards(category) {
+            const cards = document.querySelectorAll('.card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            // Update button styles
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide cards
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.classList.add('active');
+                } else {
+                    if (card.dataset.category === category) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
