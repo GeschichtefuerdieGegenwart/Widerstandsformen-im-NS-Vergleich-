@@ -298,6 +298,15 @@
             outline-offset: 2px;
         }
     </style>
+<style id="moodle-anpassung">
+/* Überarbeitung Oktober 2026: Barrierearmut und Moodle */
+:focus-visible{outline:3px solid #1d4ed8 !important;outline-offset:2px !important}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important}}
+.mdl-hinweis{max-width:900px;margin:12px auto;padding:12px 16px;border-left:4px solid #1d4ed8;background:#eef3fb;color:#1f2a37;border-radius:6px;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:left}
+.mdl-hinweis b{font-weight:700}
+.mdl-bildquellen{max-width:900px;margin:24px auto;padding:8px 16px;font:13px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#444;text-align:left}
+.mdl-bildquellen a{color:#1d4ed8;word-break:break-all}
+</style>
 </head>
 <body>
     <div class="container">
@@ -394,7 +403,7 @@
                     </div>
 
                     <h3>Ihre Aktionen</h3>
-                    <p>• Verfassung und Verteilung von 6 Flugblättern (250.000+ Kopien)<br>
+                    <p>• Verfassung und Verteilung von 6 Flugblättern (jeweils einige hundert bis einige tausend Exemplare; das sechste Flugblatt warfen britische Flugzeuge später millionenfach über Deutschland ab)<br>
                     • Appell zu "Passivem Widerstand" gegen das Regime<br>
                     • Kritik an Euthanasie und Kriegspolitik<br>
                     • Große Wandmalerei "Nieder mit Hitler" an der Uni München</p>
@@ -625,5 +634,6 @@
             });
         }
     </script>
+<script>/* Beim Laden alle Karten zeigen (»Alle anzeigen« ist voreingestellt) */document.querySelectorAll(".card").forEach(function(c){c.classList.add("active");});</script>
 </body>
 </html>
